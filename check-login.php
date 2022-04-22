@@ -5,6 +5,7 @@ try {
     $pdo = new PDO("mysql:host=127.0.0.1;dbname=truiter;user=root;password=secret");
     $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :username");
 
+    // TODO: Cal validar i sanejar
     $username = $_POST["username"];
     $password = $_POST["password"];
 
