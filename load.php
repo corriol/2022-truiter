@@ -25,7 +25,6 @@ $pdo->exec("DELETE FROM truit");
 $pdo->exec("DELETE FROM user");
 
 // INSERCIÓ
-
 $stmt = $pdo->prepare("INSERT INTO user(username, name, email, password) 
     VALUES (:username, :name, :email, :password)");
 

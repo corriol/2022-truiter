@@ -20,7 +20,7 @@
                     <input id="usuario mb-2" class="form-control" name="username" >
 
                 <label for="password" class="form-label">Contrasenya</label>
-                    <input id="password" class="form-control mb-2" name="password">
+                    <input id="password" type="password" class="form-control mb-2" name="password">
 
 
                 <button class="btn btn-primary">Iniciar sessió</button>

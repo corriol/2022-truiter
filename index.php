@@ -26,7 +26,7 @@ $truits = $stmt->fetchAll();
         <div class="offset-3 col-7 border p-4">
             <h2>Darrers truits</h2>
             <?php if ($_SESSION["user"]) :?>
-            <form class="mb-4">
+            <form class="mb-4" method="post" action="tuit-process.php">
                 <textarea class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?"></textarea>
                 <button class="btn btn-primary">Tuit</button> <a class="btn btn-secondary" href="tuit-with-image.php"">
                 <i class="bi color-primary bi-image"></i> Tuit amb imatge</a>
