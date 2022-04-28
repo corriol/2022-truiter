@@ -12,7 +12,7 @@
 </nav>
 <nav>
     <ul class="nav flex-column">
-        <?php if ($_SESSION["user"]) : ?>
+        <?php if (!empty($_SESSION["user"])) : ?>
             <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-person-fill"></i>
                     <?=$_SESSION["user"]["username"]?> </a></li>
         <?php else : ?>

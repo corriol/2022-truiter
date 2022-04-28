@@ -1,3 +1,4 @@
+<?php include 'helpers.php'?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -11,38 +12,44 @@
 <?php
 session_start();
 
-$pdo = new PDO("mysql:host=127.0.0.1;dbname=truiter;user=root;password=secret");
-$stmt = $pdo->prepare("SELECT * FROM truit INNER JOIN user ON truit.user_id = user.id ORDER BY created_at DESC");
-$stmt->execute();
-$truits = $stmt->fetchAll();
+try {
+    $pdo = new PDO("mysql:host=mysql-server;dbname=truiter;charset=utf8;user=root;password=secret");
+    $stmt = $pdo->prepare("SELECT * FROM truit INNER JOIN user ON truit.user_id = user.id ORDER BY created_at DESC");
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt->execute();
+    $truits = $stmt->fetchAll();
+} catch (Exception $e) {
+    die($e->getMessage());
+}
 
 ?>
 
 <main class="border-top mt-4 border-4 border-primary container">
     <div class="row">
         <div class="position-fixed col-2 border d-flex flex-column justify-content-between h-75">
-            <?php require "partial/sidebar.php"?>
+            <?php require "partial/sidebar.php" ?>
         </div>
         <div class="offset-3 col-7 border p-4">
             <h2>Darrers truits</h2>
-            <?php if ($_SESSION["user"]) :?>
-            <form class="mb-4" method="post" action="tuit-process.php">
-                <textarea class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?"></textarea>
-                <button class="btn btn-primary">Tuit</button> <a class="btn btn-secondary" href="tuit-with-image.php"">
-                <i class="bi color-primary bi-image"></i> Tuit amb imatge</a>
-            </form>
+            <?php if (!empty($_SESSION["user"])) : ?>
+                <form class="mb-4" method="post" action="tuit-process.php">
+                    <textarea name="text" class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?"></textarea>
+                    <button type="submit" class="btn btn-primary">Tuit</button>
+                    <a class="btn btn-secondary" href="tuit-with-image.php"">
+                    <i class="bi color-primary bi-image"></i> Tuit amb imatge</a>
+                </form>
             <?php endif; ?>
-            <?php foreach ($truits as $truit) :?>
-            <div class="card mb-2">
-                <div class="card-body">
-                    <h5 class="card-title"><?=$truit["name"] ?></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@<?=$truit["username"]?></h6>
-                    <p class="card-text"><?=$truit["text"]?></p>
+            <?php foreach ($truits as $truit) : ?>
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $truit["name"] ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@<?= $truit["username"] ?></h6>
+                        <p class="card-text"><?= $truit["text"] ?></p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <?= timePassed(DateTime::createFromFormat("Y-m-d h:i:s", $truit["created_at"])); ?>
+                    </div>
                 </div>
-                <div class="card-footer text-muted">
-                    <?=$truit["created_at"]?>
-                </div>
-            </div>
             <?php endforeach; ?>
         </div>
         <div class="col-3 border"></div>

@@ -1,6 +1,10 @@
 <?php
-$pdo = new PDO("mysql:host=127.0.0.1;dbname=truiter;user=root;password=secret");
-
+try {
+    $pdo = new PDO("mysql:host=mysql-server;dbname=truiter;user=root;password=secret");
+}
+catch (Exception $e) {
+    die($e->getMessage());
+}
 
 $theSimpsonQuotes = [
     "Mom has expressed herself.\nWe should nurture her.\nLet's kiss boys.",
@@ -21,8 +25,12 @@ $theSimpsonQuotes = [
 ];
 
 // ESBORRA'T
-$pdo->exec("DELETE FROM truit");
-$pdo->exec("DELETE FROM user");
+// $pdo->exec("DELETE FROM truit");
+$stmt = $pdo->prepare("DELETE FROM truit");
+$stmt->execute();
+
+$stmt= $pdo->prepare("DELETE FROM user");
+$stmt->execute();
 
 // INSERCIÓ
 $stmt = $pdo->prepare("INSERT INTO user(username, name, email, password) 

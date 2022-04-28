@@ -17,7 +17,7 @@
             <h2>Inici de sessió</h2>
             <form class="mb-4" method="post" action="check-login.php">
                 <label for="usuario" class="form-label"">Usuari</label>
-                    <input id="usuario mb-2" class="form-control" name="username" >
+                    <input id="usuario" class="form-control" name="username" >
 
                 <label for="password" class="form-label">Contrasenya</label>
                     <input id="password" type="password" class="form-control mb-2" name="password">

@@ -2,12 +2,15 @@
 session_start();
 try {
 
-    $pdo = new PDO("mysql:host=127.0.0.1;dbname=truiter;user=root;password=secret");
+    $pdo = new PDO("mysql:host=mysql-server;dbname=truiter;user=root;password=secret");
     $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :username");
 
     // TODO: Cal validar i sanejar
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $username = filter_input(INPUT_POST ,"username");
+    if (empty($username))
+        throw new Exception("El nom d'usuari és obligatori");
+
+    $password = filter_input(INPUT_POST ,"password");
 
     $stmt->bindValue("username", $username);
 
