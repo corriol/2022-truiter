@@ -18,10 +18,10 @@ class UploadedFileHandler {
        if (empty($acceptedTypes) || in_array($this->uploadedFile["type"], $acceptedTypes))
             $this->acceptedTypes = $acceptedTypes;
        else
-           throw new InvalidTypeFileException("El tipus del fitxer no és correcte");
+           throw new Exception("El tipus del fitxer no és correcte");
 
         if ($maxSize != 0 && $this->uploadedFile["size"] > $maxSize)
-           throw new TooBigFileException("El fitxer ({$this->uploadedFile["size"]}) és major que $maxSize");
+           throw new Exception("El fitxer ({$this->uploadedFile["size"]}) és major que $maxSize");
 
        $this->maxSize = $maxSize;
     }
@@ -33,14 +33,10 @@ class UploadedFileHandler {
     public function handle(string $path): string
     {
         //doble-check
-
-
-
-
         $mimeType = $this->getFileExtension($this->uploadedFile["tmp_name"]);
 
         if (!empty($this->acceptedTypes) && !in_array($mimeType, $this->acceptedTypes))
-            throw new InvalidTypeFileException("El tipus del fitxer no és correcte 2");
+            throw new Exception("El tipus del fitxer no és correcte 2");
 
         $extension = explode("/", $mimeType)[1];
 
@@ -48,7 +44,7 @@ class UploadedFileHandler {
         $newFullFilename = $path . "/" . $newFilename;
 
         if (!move_uploaded_file($this->uploadedFile["tmp_name"], $newFullFilename))
-            throw new FileUploadException("No s'ha pogut moure la foto");
+            throw new Exception("No s'ha pogut moure el fitxer");
 
         return $newFilename;
     }

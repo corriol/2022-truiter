@@ -1,8 +1,12 @@
 <?php
 session_start();
+
+require_once __DIR__ . "/src/Services/Database.php";
+require_once __DIR__ . '/src/Services/FlashMessage.php';
+
 try {
 
-    $pdo = new PDO("mysql:host=mysql-server;dbname=truiter;user=root;password=secret");
+    $pdo = Database::getConnection();
     $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :username");
 
     // TODO: Cal validar i sanejar
@@ -24,7 +28,10 @@ try {
     if ($user) {
         if (password_verify($password, $user["password"])) {
             $_SESSION["user"] = $user;
-            echo "L'usuari {$user["username"]} ha iniciat sessió correctament";
+
+            FlashMessage::set("message", "L'usuari {$user["username"]} ha iniciat sessió correctament");
+            header("Location: /index.php");
+            exit();
         }
         else
             throw new Exception("Contrasenya invàlida");
@@ -33,7 +40,9 @@ try {
 
 }
 catch (Exception $e) {
-    die($e->getMessage());
+    FlashMessage::set("error", "Ha hagut un error: {$e->getMessage()}");
+    header("Location: /login.php");
+    exit();
 }
 
 

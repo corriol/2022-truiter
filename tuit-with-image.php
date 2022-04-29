@@ -15,9 +15,9 @@
         </div>
         <div class="col-7 border p-4">
             <h2>Nou truit amb imatge</h2>
-            <form class="mb-4">
-                <textarea class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?"></textarea>
-                <input type="file" class="form-control mb-2" >
+            <form class="mb-4" action="/tuit-with-image-process.php" method="POST" enctype="multipart/form-data">
+                <textarea class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?" name="text"></textarea>
+                <input type="file" class="form-control mb-2" name="image">
                 <button class="btn btn-primary">Tuit with image</button>
             </form>
         </div>

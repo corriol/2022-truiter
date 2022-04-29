@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once "helpers.php";
+require_once __DIR__ . "/src/Services/Database.php";
+require_once __DIR__ . "/src/Services/UploadedFileHandler.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     die("Solo se aceptan datos por POST");
@@ -22,6 +24,9 @@ try {
     if (strlen($message) > 140)
         throw new Exception("El truit és massa llarg");
 
+    $uploadedFileHandler = new UploadedFileHandler("image", ["image/jpg", "image/jpeg", "image/png"]);
+    $filename = $uploadedFileHandler->handle("images");
+
 } catch (Exception $e) {
     $errors[] = "Tuit: {$e->getMessage()}";
 }
@@ -31,15 +36,16 @@ if (empty($errors)) {
     $date = new DateTime();
 
     try {
-        $pdo = new PDO("mysql:host=mysql-server;dbname=truiter;charset=utf8", "root", "secret");
+        $pdo = Database::getConnection();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         //Implementacio de la consulta amb la base de dades
 
-        $stmt = $pdo->prepare("INSERT INTO truit (user_id, text, created_at) VALUES (:user_id, :descripcion,:dada)");
+        $stmt = $pdo->prepare("INSERT INTO truit (user_id, text, created_at, image) VALUES (:user_id, :descripcion,:dada, :image)");
 
         $stmt->bindValue("user_id", $_SESSION["user"]["id"]);
         $stmt->bindValue("descripcion", $message);
+        $stmt->bindValue("image", $filename);
         $stmt->bindValue("dada", $date->format("Y-m-d h:i:s"));
 
         $stmt->execute();

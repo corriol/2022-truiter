@@ -10,10 +10,14 @@
 <body>
 
 <?php
+
+require_once __DIR__ . '/src/Services/Database.php';
+require_once __DIR__ . '/src/Services/FlashMessage.php';
+
 session_start();
 
 try {
-    $pdo = new PDO("mysql:host=mysql-server;dbname=truiter;charset=utf8;user=root;password=secret");
+    $pdo = Database::getConnection();
     $stmt = $pdo->prepare("SELECT * FROM truit INNER JOIN user ON truit.user_id = user.id ORDER BY created_at DESC");
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $stmt->execute();
@@ -31,6 +35,11 @@ try {
         </div>
         <div class="offset-3 col-7 border p-4">
             <h2>Darrers truits</h2>
+            <?php
+            $message = FlashMessage::get("message");
+            if (!empty($message)) :?>
+                <div class="alert alert-primary" role="alert"><?=$message?></div>
+            <?php endif;?>
             <?php if (!empty($_SESSION["user"])) : ?>
                 <form class="mb-4" method="post" action="tuit-process.php">
                     <textarea name="text" class="form-control mb-2" placeholder="Què passa, [nom d'usuari]?"></textarea>
@@ -45,6 +54,15 @@ try {
                         <h5 class="card-title"><?= $truit["name"] ?></h5>
                         <h6 class="card-subtitle mb-2 text-muted">@<?= $truit["username"] ?></h6>
                         <p class="card-text"><?= $truit["text"] ?></p>
+
+                        <?php if (!empty($truit["image"])) : ?>
+                            <div class="w-100">
+                                <img class="w-100" src="images/<?=$truit["image"]?>" alt="image"/>
+                            </div>
+                        <?php else :?>
+
+                        <?php endif;?>
+
                     </div>
                     <div class="card-footer text-muted">
                         <?= timePassed(DateTime::createFromFormat("Y-m-d h:i:s", $truit["created_at"])); ?>

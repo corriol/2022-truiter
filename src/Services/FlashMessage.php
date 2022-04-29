@@ -6,7 +6,6 @@
  * Class FlashMessage
  *
  */
-namespace App;
 
 class FlashMessage
 {
@@ -23,7 +22,6 @@ class FlashMessage
      * @return mixed|string
      */
     public static function get(string $key, $defaultValue = ''){
-
         $value = $_SESSION[self::SESSION_KEY][$key]??$defaultValue;
         self::unset($key);
         return $value;

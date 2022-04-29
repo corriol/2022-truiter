@@ -9,12 +9,24 @@
 <body>
 
 <main class="border-top mt-4 border-4 border-primary container">
+
     <div class="row">
         <div class="col-2 border d-flex flex-column justify-content-between">
             <?php require "partial/sidebar.php"?>
         </div>
         <div class="col-7 border p-4">
+
             <h2>Inici de sessió</h2>
+
+            <?php
+            session_start();
+            require_once __DIR__ . '/src/Services/FlashMessage.php';
+
+            $error = FlashMessage::get("error");
+            if (!empty($error)) :?>
+                <div class="alert alert-danger" role="alert"><?=$error?></div>
+            <?php endif;?>
+
             <form class="mb-4" method="post" action="check-login.php">
                 <label for="usuario" class="form-label"">Usuari</label>
                     <input id="usuario" class="form-control" name="username" >

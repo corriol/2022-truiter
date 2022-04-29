@@ -1,10 +1,5 @@
 <?php
 
-namespace App;
-
-use Exception;
-use PDO;
-
 class Database
 {
     private PDO $connection;
@@ -15,7 +10,7 @@ class Database
     public function __construct()
     {
 
-        $dsn = "";
+        $dsn = "mysql:host=127.0.0.1;dbname=truiter;charset=utf8;user=root;";
 
 		try {
 	        $pdo = new PDO($dsn);
