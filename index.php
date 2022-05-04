@@ -1,4 +1,11 @@
-<?php include 'helpers.php'?>
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Services\Database;
+
+include 'helpers.php'
+
+?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -11,7 +18,6 @@
 
 <?php
 
-require_once __DIR__ . '/src/Services/Database.php';
 require_once __DIR__ . '/src/Services/FlashMessage.php';
 
 session_start();
@@ -56,8 +62,8 @@ try {
                         <p class="card-text"><?= $truit["text"] ?></p>
 
                         <?php if (!empty($truit["image"])) : ?>
-                            <div class="w-100">
-                                <img class="w-100" src="images/<?=$truit["image"]?>" alt="image"/>
+                            <div  style="width: 150px; height: auto" >
+                                <img class="w-100 h-100" style="object-fit: scale-down" src="images/<?=$truit["image"]?>" alt="image"/>
                             </div>
                         <?php else :?>
 

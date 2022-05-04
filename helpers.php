@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Webmozart\Assert\Assert;
 
 function timePassed(DateTime $date): string {
 
@@ -12,21 +15,22 @@ function validate_user(array $user): array {
     $errors = [];
 
     try {
-        validate_string($user["name"]);
+        Assert::notEmpty($user["name"]);
 
     }catch (Exception $e){
         $errors[] = "Nombre: {$e->getMessage()}";
     }
 
     try {
-        validate_string($user["username"]);
+        Assert::notEmpty($user["username"]);
 
     }catch (Exception $e){
         $errors[] = "Nickname: {$e->getMessage()}";
     }
 
     try {
-        validate_email($user["email"]);
+        Assert::email($user["email"], "El correu electrònic és invalid");
+       // validate_email($user["email"]);
 
     }catch (Exception $e){
         $errors[] = "Email: {$e->getMessage()}";
