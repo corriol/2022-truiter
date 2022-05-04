@@ -1,8 +1,11 @@
 <?php
 session_start();
 
-require_once __DIR__ . "/src/Services/Database.php";
-require_once __DIR__ . '/src/Services/FlashMessage.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+
+use App\Services\Database;
+use App\Services\FlashMessage;
 
 try {
 
@@ -30,7 +33,7 @@ try {
             $_SESSION["user"] = $user;
 
             FlashMessage::set("message", "L'usuari {$user["username"]} ha iniciat sessió correctament");
-            header("Location: /index.php");
+            header("Location: /");
             exit();
         }
         else
@@ -41,7 +44,7 @@ try {
 }
 catch (Exception $e) {
     FlashMessage::set("error", "Ha hagut un error: {$e->getMessage()}");
-    header("Location: /login.php");
+    header("Location: /login");
     exit();
 }
 

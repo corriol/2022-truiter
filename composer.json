@@ -1,11 +1,14 @@
 {
     "require": {
-        "webmozart/assert": "^1.10"
+        "webmozart/assert": "^1.10",
+        "ext-pdo": "*",
+        "symfony/http-foundation": "^5.4"
     },
 
     "autoload": {
         "psr-4": {
             "App\\": "src/"
-        }
+        },
+        "files": ["helpers.php"]
     }
 }

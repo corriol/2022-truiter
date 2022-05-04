@@ -1,5 +1,11 @@
 <?php
+
+namespace App\Services;
+
+use Exception;
+
 class UploadedFileHandler {
+
     private array $uploadedFile;
     private int $maxSize;
     private array $acceptedTypes;
