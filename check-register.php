@@ -1,10 +1,12 @@
 <?php
-
+require_once __DIR__ . '/vendor/autoload.php';
 session_start();
-require_once "helpers.php";
+
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("Solo se aceptan datos por POST");
+    \App\Services\FlashMessage::set("errors", ["Solo por POST"]);
+    header('Location: /register');
+    exit();
 }
 
 $data = [];
@@ -17,8 +19,11 @@ $data["password"] = $_POST["password"] ?? "";
 
 $errors = validate_user($data);
 
-if (count($errors)>0)
-    throw new Exception("Errors de validació: " . implode (",", $errors));
+if (count($errors)>0) {
+    \App\Services\FlashMessage::set("errors", $errors);
+    header('Location: /register');
+    exit();
+}
 
 $data["password"] = password_hash($data["password"], PASSWORD_DEFAULT);
 

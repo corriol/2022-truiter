@@ -5,8 +5,6 @@ use App\Services\Database;
 use App\Services\FlashMessage;
 use Symfony\Component\HttpFoundation\Response;
 
-
-
 try {
     $pdo = Database::getConnection();
     $stmt = $pdo->prepare("SELECT * FROM truit INNER JOIN user ON truit.user_id = user.id ORDER BY created_at DESC");
@@ -18,7 +16,6 @@ try {
 }
 
 $response = new Response();
-
 $message = FlashMessage::get("message");
 
 ob_start();

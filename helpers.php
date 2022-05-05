@@ -6,7 +6,6 @@ use Webmozart\Assert\Assert;
 
 function timePassed(DateTime $date): string {
 
-
     return $date->format("Y-m-d h:i:s");
 }
 
