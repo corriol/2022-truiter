@@ -14,7 +14,7 @@
         <div class="col-2 border d-flex flex-column justify-content-between">
             <?php use App\Services\FlashMessage;
 
-            require __DIR__ . "/partial/sidebar.php"?>
+            require __DIR__ . "/partial/sidebar.php" ?>
         </div>
         <div class="col-7 border p-4">
 

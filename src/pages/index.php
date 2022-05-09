@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Services\Database;
 use App\Services\FlashMessage;
@@ -19,7 +18,7 @@ $response = new Response();
 $message = FlashMessage::get("message");
 
 ob_start();
-require __DIR__ . '/views/index.view.php';
+require __DIR__ . '/../../views/index.view.php';
 $content = ob_get_clean();
 
 $response->setContent($content);
