@@ -3,7 +3,8 @@
         "webmozart/assert": "^1.10",
         "ext-pdo": "*",
         "symfony/http-foundation": "^5.4",
-        "symfony/routing": "^5.4"
+        "symfony/routing": "^5.4",
+        "symfony/http-kernel": "^5.4"
     },
 
     "autoload": {
